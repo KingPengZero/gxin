@@ -1,0 +1,36 @@
+@import '../../../Common/Common';
+
+.carouselCss {
+  display: flex;
+  padding: 4px 15px;
+
+  .iconTV {
+    @extend .gWebkitBoxCenter;
+    margin-right: 10px;
+  }
+
+  .contentList {
+    flex: 1;
+    overflow: hidden;
+    height: 65px;
+
+    .items {
+      // display: flex;
+      // width: 300%;
+
+      .ZdRollingDataBox {
+        padding-top: 8px;
+        height: 65px;
+        //在此处添加 向上轮播动画
+        &.animation {
+          transform: translate3d(0, -100%, 0);
+          transition: all .5s linear;
+        }
+
+        .ZdRollingData {
+          padding: 2px 0;
+        }
+      }
+    }
+  }
+}

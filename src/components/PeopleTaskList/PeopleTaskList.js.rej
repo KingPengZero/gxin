@@ -1,0 +1,277 @@
+diff a/lighttask/mobile/src/components/PeopleTaskList/PeopleTaskList.js b/lighttask/mobile/src/components/PeopleTaskList/PeopleTaskList.js	(rejected hunks)
+@@ -2,29 +2,59 @@
+  * Created by root on 2017/1/12.
+  */
+ import React, { Component, PropTypes } from 'react';
+-import { Utility } from 'components';
+-
++import { Utility, ApiInfo } from 'components';
++import { connect } from 'react-redux';
++import * as CommonActions from 'redux/modules/reduxCommon';
++@connect(
++  state => ({
++    Title: state.Common.Title,                                             // 标题
++    UrlParams: state.Common.UrlParams,                                     // URL参数
++  }),
++  { ...CommonActions })
+ export default class PeopleTaskList extends Component {
+   static propTypes = {
+-    PeopleTaskList: PropTypes.array,
++    Title: PropTypes.string,                                            // 标题
++    UrlParams: PropTypes.object,                                        // url 参数
++    PeopleTaskList1: PropTypes.array,
+     onItemClick: PropTypes.func,
+     IsShowLoadingComplete: PropTypes.bool,
+-    peopleTaskList: PropTypes.array,
+     aboutUrl: PropTypes.func,
+-    aboutNextPage: PropTypes.func
++    aboutNextPage: PropTypes.func,
++    onApiPost: PropTypes.func,
++    onApiDelete: PropTypes.func,
++    onSetContent: PropTypes.func,
++    onUpdatePeople: PropTypes.func,
++    dataSource: PropTypes.boolean,
++    type: PropTypes.string,
++    explan: PropTypes.string,
+   };
+   constructor(props) {
+     super(props);
+     this.state = {
++      PeopleList: [],
++      delepeo: {},
++      isAuth: false,
++      delesenpeo: {},
+     };
+   }
+-  __handleClick(obj) {
+-    const { aboutNextPage } = this.props;
+-    aboutNextPage(obj);
++
++  componentWillReceiveProps(nextProps) {
++    const { peopleTaskList1, dataSource } = nextProps;
++    if (dataSource === 'author') {
++      this.setState({ isAuth: true });
++    }
++    this.state.PeopleInfo = {};
++    if (Utility.isArray(peopleTaskList1)) {
++      peopleTaskList1.forEach((people) => {
++        const { taskUser } = people;
++        this.state.PeopleInfo[taskUser] = people;
++      });
++    }
++    this.setState({ PeopleList: peopleTaskList1 });
+   }
+-  __handleOnClick(url) {
+-    const { aboutUrl } = this.props;
+-    aboutUrl(url);
++  componentWillUnmount() {
++    const { onSetContent } = this.props;
++    onSetContent('senderPeo', this.state.PeopleList);
+   }
+   __getStatelist(styles, dataeArr) {
+     if (!dataeArr || !dataeArr.extTaskUserHistories) {
+@@ -67,40 +97,193 @@
+     return statusStr;
+   }
+   __GetArticalList(styles) {
++    const { type, explan } = this.props;
+     let dataeArr = [];
+-    const { peopleTaskList } = this.props;
+-    if (peopleTaskList) {
+-      dataeArr = peopleTaskList;
++    const { PeopleList, delepeo, isAuth, delesenpeo } = this.state;
++    if (PeopleList) {
++      dataeArr = PeopleList;
+     }
+     const _items = dataeArr.map((obj, index) => {
+       return (
+         <div className={styles.peopleContent} key={index}>
+-          <div className={styles.people}>
++          {type ? <div className={styles.people}>
++            {isAuth && <div className={styles.inputc}>
++              <input type="checkbox" checked={delesenpeo[obj.taskUser] ? true : false} ref="Inputs" onClick={this.checkpeo.bind(this, obj)} />
++            </div>}
+             <div className={styles.icon} />
+-            <div className={styles.name}>{obj.taskUserName ? obj.taskUserName : ''}</div>
+-            <div className={obj.status === Utility.constItem.Task.Task_REFUSE ? styles.state2 : styles.state}>{this.__getState(obj.status)}</div>
+-          </div>
++            <div className={styles.name}>{obj.notifier_name ? obj.notifier_name : ''}</div>
++          </div> :
++            <div className={styles.people}>
++              {isAuth && <div className={styles.inputc}>
++                <input type="checkbox" checked={delepeo[obj.taskUser] ? true : false} ref="Inputs" onClick={this.checkpeo.bind(this, obj)} />
++              </div>}
++              <div className={styles.icon} />
++              <div className={styles.name}>{obj.taskUserName ? obj.taskUserName : ''}</div>
++              {explan && explan !== 'MEETING' && <div className={obj.status === Utility.constItem.Task.Task_REFUSE ? styles.state2 : styles.state}>{this.__getState(obj.status)}</div>}
++            </div>
++          }
+         </div>
+       );
+     });
+     return _items;
+   }
++  __HandlerSelectPeople() {
++    const { PeopleList, PeopleInfo } = this.state;
++    const { onUpdatePeople, onApiPost, UrlParams, type } = this.props;
++    const { taskId } = UrlParams;
++    let pIdList = [];
++    if (Utility.isArray(PeopleList)) {
++      pIdList = PeopleList.map((item) => item.userId);
++    }
++    Utility.$platformApi.$selectUser(pIdList, true, (data) => {
++      const { users } = data || {};
++      if (type) {
++        users.forEach((userse) => {
++          const { userId, username } = userse;
++          const _objsen = { notifier_name: username, notifier_id: userId };
++          if (!PeopleInfo[userId]) {
++            PeopleInfo[userId] = _objsen;
++          }
++        });
++        const newDatasen = Object.values(PeopleInfo);
++        this.setState({ PeopleList: newDatasen });
++        if (onUpdatePeople) {
++          onUpdatePeople(this.state.PeopleList);
++        }
++      } else {
++        const __NewAddUserList = [];
++        users.forEach((user) => {
++          const { userId, username } = user;
++          const _obj = { taskUserName: username, taskUser: userId };
++          if (!PeopleInfo[userId]) {
++            // PeopleInfo[userId] = Object.assign(user, {taskUserName: username,
++            //        taskUser: userId});
++            PeopleInfo[userId] = _obj;
++            __NewAddUserList.push(PeopleInfo[userId]);
++          }
++        });
++        const newData = Object.values(PeopleInfo);
++        onApiPost('SavepeoInfo', Utility.format(ApiInfo.Meeting.AddPeople, taskId), { data: __NewAddUserList }).then(() => {
++          this.setState({ PeopleList: newData });
++          if (onUpdatePeople) {
++            onUpdatePeople(this.state.PeopleList);
++          }
++        }, (err) => {
++          Utility.$alert(JSON.stringify(err));
++          Utility.$loadingHide();
++        });
++      }
++    }, (err) => {
++      Utility.$alert(JSON.stringify(err));
++    });
++  }
++  /*
++  * 删除接收人
++  * */
++  dele() {
++    const { onApiDelete, UrlParams, onUpdatePeople, type } = this.props;
++    const { taskId } = UrlParams;
++    const { delepeo, PeopleInfo, delesenpeo } = this.state;
++    const newDatas = Object.values(delepeo);
++    const __newData = Object.values(PeopleInfo);
++    const newSendPeo = Object.values(delesenpeo);
++    if (type) {
++      if (newSendPeo.length === __newData.length) {
++        Utility.$alert('不可全部删除');
++        return;
++      }
++      if (newSendPeo.length > 0) {
++        newSendPeo.forEach((item) => {
++          if (PeopleInfo[item.notifier_id]) {
++            delete PeopleInfo[item.notifier_id];
++          }
++        });
++      }
++      this.setState({ PeopleList: Object.values(PeopleInfo), delesenpeo: {}, PeopleInfo: this.state.PeopleInfo, bool: false });
++      if (onUpdatePeople) {
++        onUpdatePeople(this.state.PeopleList);
++      }
++    } else {
++      if (newDatas.length === __newData.length) {
++        Utility.$alert('不可全部删除');
++        return;
++      }
++      if (newDatas.length > 0) {
++        newDatas.forEach((item) => {
++          if (PeopleInfo[item.taskUser]) {
++            delete PeopleInfo[item.taskUser];
++          }
++        });
++      }
++      const __dele = () => {
++        if (newDatas.length > 0) {
++          onApiDelete('DeletepeoInfo', Utility.format(ApiInfo.Meeting.deletePeople, taskId), { data: newDatas }).then(() => {
++            this.setState({ PeopleList: Object.values(PeopleInfo), delepeo: {}, PeopleInfo: this.state.PeopleInfo, bool: false });
++            if (onUpdatePeople) {
++              onUpdatePeople(this.state.PeopleList);
++            }
++          }, (err) => {
++            Utility.$alert(JSON.stringify(err));
++            Utility.$loadingHide();
++          });
++        }
++      };
++      Utility.$actionSheetBtns([{
++        Title: '删除', onClick: () => {
++          Utility.$actionSheetHide();
++          setTimeout(() => {
++            __dele();
++          }, 200);
++        }
++      }]);
++    }
++  }
++  /*
++  * 删除接收人数组
++  * */
++  checkpeo(obj) {
++    const { type } = this.props;
++    const { delepeo, delesenpeo } = this.state;
++    if (type) {
++      if (delesenpeo[obj.notifier_id]) {
++        delete delesenpeo[obj.notifier_id];
++      } else {
++        delesenpeo[obj.notifier_id] = obj;
++      }
++      this.setState({ delesenpeo: this.state.delesenpeo });
++    } else {
++      if (delepeo[obj.taskUser]) {
++        delete delepeo[obj.taskUser];
++      } else {
++        delepeo[obj.taskUser] = obj;
++      }
++      this.setState({ delepeo: this.state.delepeo });
++    }
++  }
+   render() {
+     const styles = require('./scss/PeopleTaskList.scss');
++    const { isAuth } = this.state;
++    const { explan } = this.props;
+     let { IsShowLoadingComplete } = this.props;
+-    let { peopleTaskList } = this.props;
+-    if (!peopleTaskList) {
+-      peopleTaskList = [];
++    let { PeopleTaskList1 } = this.props;
++    if (!PeopleTaskList1) {
++      PeopleTaskList1 = [];
+     }
+-    if (peopleTaskList.length === 0) {
++    if (PeopleTaskList1.length === 0) {
+       IsShowLoadingComplete = false;
+     }
+     return (
+       <div className={styles.content}>
++        {explan && explan === 'MEETING' && <div className={styles.addpeo}>
++          <div className={styles.centera} onClick={this.__HandlerSelectPeople.bind(this)}>+添加</div>
++        </div>}
+         {this.__GetArticalList(styles)}
+         {
+           IsShowLoadingComplete ? <div className={styles.complateInfo}>内容全部加载完成</div> : ''
+         }
++        {isAuth && explan && explan === 'MEETING' && <div className={styles.filter}>
++          <div className={styles.deleteb} onClick={this.dele.bind(this)}>删除</div>
++        </div>}
+       </div>
+     );
+   }

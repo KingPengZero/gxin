@@ -1,0 +1,123 @@
+@import "../../../Common/Common";
+
+.content {
+  margin-top: 10px;
+  border-top: #e1e1e1 1px solid;
+  border-bottom: #e1e1e1 1px solid;
+  width: 100%;
+  background: #ffffff;
+
+  .item {
+    display: inline-flex;
+    width: 100%;
+
+    .headIcon {
+      width: 35px;
+      margin-top: 11px;
+      margin-left: 11px;
+      height: 35px;
+    }
+
+    .replyContent {
+      margin-top: 13px;
+      margin-left: 11px;
+      width: 100%;
+      .nametime {
+        display: inline-flex;
+
+        .name {
+          color: #a0a0a0;
+          font-size: 12px;
+        }
+
+        .valueNoIcon {
+          color: #a0a0a0;
+          font-size: 12px;
+          text-align: right;
+          float: right;
+          max-width: 60%;
+          position: absolute;
+          right: 17px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+      }
+
+      .reply {
+        margin-top: 1px;
+        margin-right: 17px;
+        margin-bottom: 16px;
+        color: #000000;
+        font-size: 12px;
+      }
+      .line{
+        width: 100%;
+        height: 1px;
+        background-color:#e1e1e1; 
+      }
+    }
+
+    .itemWithLine {
+      display: inline-flex;
+      margin-left: 17px;
+      width: 100%;
+      border-bottom: #e1e1e1 1px solid;
+
+      .name {
+        color: #000000;
+        font-size: 14px;
+        height: 45px;
+        line-height: 45px;
+        text-align: center;
+        max-width: 155px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .value {
+        color: #656565;
+        font-size: 12px;
+        line-height: 45px;
+        text-align: right;
+        float: right;
+        max-width: 60%;
+        position: absolute;
+        right: 33px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .valueNoIcon {
+        color: #656565;
+        font-size: 12px;
+        line-height: 45px;
+        text-align: right;
+        float: right;
+        max-width: 60%;
+        position: absolute;
+        right: 17px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .icon {
+        float: right;
+        position: absolute;
+        right: 12px;
+        padding-top: 11px;
+      }
+    }
+  }
+}
+   .complateInfo {
+    padding: 15px;
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 51px;
+  }
+ 

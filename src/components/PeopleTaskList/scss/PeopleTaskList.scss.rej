@@ -1,0 +1,57 @@
+diff a/lighttask/mobile/src/components/PeopleTaskList/scss/PeopleTaskList.scss b/lighttask/mobile/src/components/PeopleTaskList/scss/PeopleTaskList.scss	(rejected hunks)
+@@ -1,11 +1,48 @@
+ @import "../../../Common/Common";
+ 
+ .content {
++  .addpeo{
++    padding: 25px;
++    .centera{
++      height: 50px;
++      line-height: 50px;
++      text-align: center;
++      background-color: #fff;
++      border-radius: 25px;
++      color: $user-info-value;
++      font-size: 21px;
++    }
++  }
++  .filter{
++    width: 100%;
++    height: 50px;
++    position: fixed;
++    bottom: 0px;
++    left: 0px;
++    color: #fff;
++    background-color: $exper-select-color;
++    .deleteb{
++      width: 100%;
++      height: 100%;
++      line-height: 50px;
++      text-align: center;
++      font-size: 21px;
++    }
++  }
+   .peopleContent {
+     background-color: #fff;
+     border-bottom: 1px #dfdfdf solid;
+     padding: 12px 17px 0px 17px;
+     height: 52px;
++    .inputc{
++      margin-right: 10px;
++      input{
++        background-color: #fff;
++        width: 20px;
++        height: 20px;
++        display: inline-block;
++      }
++    }
+     .people {
+       display: inline-flex;
+       .icon {
+@@ -56,5 +93,6 @@
+     padding: 15px;
+     text-align: center;
+     font-size: 15px;
++    margin-bottom: 60px;
+   }
+ }

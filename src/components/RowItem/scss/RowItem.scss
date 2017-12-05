@@ -1,0 +1,46 @@
+.rowItemCss {
+  padding: 0;
+  background: #fff;
+  padding-left: .35rem;
+
+  .item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e1e1e1;
+    border-top: 1px solid #e1e1e1;
+
+    &.hideBottom {
+      border-bottom: none;
+    }
+
+    &.hideTop {
+      border-top: none;
+    }
+
+    .left {
+      font-size: .48rem;
+      padding: .2rem 0;
+      color: #222;
+    }
+
+    .right {
+      font-size: .40rem;
+      display: flex;
+      flex: 1;
+      align-items: center;
+      margin-right: .2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      .title {
+        flex: 1;
+        text-align: right;
+        margin-right: .123rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+@import '../../../Common/Common';
+
+.topTabCss {
+  left: 0;
+  width: 100%;
+  display: flex;
+  position: relative;
+  background: #fff;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+
+  .item {
+    flex: 1;
+    text-align: center;
+    color: #222;
+    font-size: 16px;
+    @extend .gWebkitBoxCenter;
+
+    > div {
+      padding: 10px;
+    }
+
+    &.select {
+      > div {
+        padding-bottom: 8px;
+        border-bottom: 2px solid #13A7FF;
+      }
+    }
+
+    &.notFill {
+      flex: none;
+    }
+  }
+}

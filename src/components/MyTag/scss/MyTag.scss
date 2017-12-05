@@ -1,0 +1,17 @@
+@import "../../../Common/Common";
+  .normal{
+    font-size:$font-default;
+    text-align: center;
+    color: $font-color-white;
+    padding: 10px;
+    border-radius: 30px;
+    background-color:$main-color;
+  }
+  .voice{
+    font-size:$font-default;
+    text-align: center;
+    color: $font-color-white;
+    padding: 10px;
+    border-radius: 30px;
+    background-color:$voice-color;
+}

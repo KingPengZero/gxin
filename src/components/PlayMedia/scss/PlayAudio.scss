@@ -1,0 +1,55 @@
+@import '../../../Common/Common';
+.playAudioCss {
+  width: 100%;
+  height: 100%;
+  padding: 5px 0px;
+  // max-width: 80%;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  .audioContainer {
+    padding: 0px;
+    position: relative;
+    width: 30%;
+    min-width: 30%;
+    max-width: 70%;
+    height: 35px;
+    // z-index: 102;
+    display: flex;
+    &.selfAudioCss {
+      justify-content: flex-end;
+    }
+    &.otherAudioCss {
+      justify-content: flex-start;
+
+    }
+    .audioCss {
+      padding: 0px;
+      position: absolute;
+      top: 0px;
+      height: 35px;
+    }
+    .wifiCss {
+      padding: 0px;
+      position: absolute;
+      top: 8%;
+      padding-left: 10px;
+      &.isSelfWifi {
+        right: 10px;
+        padding: 0px;
+      }
+      &.rightCss {
+        left: 0px;
+      }
+    }
+    >img {
+      width: 100%;
+      height: 35px;
+    }
+  }
+  .timeCount {
+    padding: 0px 5px;
+    font-size: 14px;
+    color: #888888;
+  }
+}

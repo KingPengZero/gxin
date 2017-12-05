@@ -1,0 +1,247 @@
+@import '../../../Common/Common';
+.taskListCss {
+  position: relative;
+  overflow: hidden;
+  .yearMonthCss {
+    color: #a0a0a0;
+    font-size: 12px;
+    padding-bottom: 3px;
+  }
+  .listDayContainer {
+    padding: 0px;
+    display: flex;
+    .left {
+      padding: 0px;
+      .upLeft {
+        padding-right: 3px;
+        .upSpace {
+          padding: 6px 0;
+        }
+        .dateContainer {
+          color: #13a7ff;
+          font-size: 16px;
+          text-align: right;
+          line-height: 1;
+        }
+      }
+      .weekContainer {
+        font-size: 16px;
+        color: #a0a0a0;
+        height: 100%;
+        padding-right: 3px;
+      }
+    }
+    .right {
+      flex: 1;
+      z-index: 9999;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+  .taskListContainer {
+    padding: 4px 0px 4px 0px;
+    display: flex;
+    position: relative;
+    // overflow: hidden;
+    .lineCss {
+      border-left: 2px solid #e6e6e6;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 25px;
+      left: 5px;
+      &.hideLine {
+        border-color: transparent;
+      }
+    }
+    .iconContainer {
+      margin-top: 14px;
+      height: 100%;
+      margin-right: -1px;
+      z-index: 26;
+      border-right: 1px solid #FFFFFF;
+    }
+    .dayTaskContainer {
+      flex: 1;
+      padding: 14px 12px;
+      background-color: #FFFFFF;
+      border-radius: 3px;
+      border: 1px solid #e6e6e6;
+      overflow: hidden;
+      &.anteCss {
+        border: 1px solid #5bc2ff;
+        background-color: #e9f7ff;
+      }
+      .content {
+        color: #222222;
+        font-size: 16px;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
+      }
+      .midium {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 12px;
+        color: #656565;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-top: 10px;
+        .senderIcon {
+          display: flex;
+          align-items: center;
+          padding: 0px;
+          padding-right: 5px;
+          white-space: nowrap;
+          .span {
+            padding: 0 5px;
+          }
+        }
+        .labelContainer {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          color: #ffffff;
+          font-size: 12px;
+          overflow: hidden;
+          .oneStatus {
+            padding: 1px .3rem;
+            border-radius: 5px;
+            // background-color: #ff3823;
+            margin-right: 5px;
+          }
+          .twoStatus {
+            @extend .oneStatus;
+            background-color: #f39c13;
+          }
+          .otherlabel {
+            @extend .oneStatus;
+            background-color: #e7e7e7;
+            color: #a0a0a0;
+            &.urgency {
+              background-color: #ff3823;
+              color: #ffffff;
+            }
+            &.importantCss {
+              background-color: #f39c13;
+              color: #ffffff;
+            }
+          }
+        }
+      }
+      .resiverContainer {
+        padding-top: 8px;
+      }
+      .resiverContainer,
+      .senderContainer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: #656565;
+        font-size: 12px;
+        padding-bottom: 10px;
+        .resiverIcon,
+        .senderIcon {
+          @extend .resiverContainer;
+          padding: 0px;
+          .span {
+            padding: 0 4px;
+          }
+        }
+        .resiver,
+        .sender {
+          flex: 1;
+          padding: 0px 4px;
+          overflow: hidden;
+          white-space: nowrap;
+          &.labelContainer {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            color: #ffffff;
+            font-size: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            .oneStatus {
+              padding: 1px 15px;
+              border-radius: 5px;
+              background-color: #ff3823;
+              margin-right: 5px;
+            }
+            .twoStatus {
+              @extend .oneStatus;
+              background-color: #f39c13;
+            }
+            .threeStatus {
+              @extend .oneStatus;
+              background-color: #e7e7e7;
+              color: #a0a0a0;
+            }
+            .otherlabel {
+              padding: 0px;
+              .otherCss {
+                padding: 1px;
+                background-color: #e7e7e7;
+                color: #a0a0a0;
+                margin-right: 5px;
+              }
+            }
+            .restCss {
+              overflow: hidden;
+              .otherlabel {
+                padding: 0px;
+                .otherCss {
+                  padding: 1px;
+                  background-color: #e7e7e7;
+                  color: #a0a0a0;
+                  margin-right: 5px;
+                }
+              }
+            }
+          }
+        }
+        .resiver {
+          white-space: nowrap;
+          overflow: hidden;
+          .userContainer {
+            white-space: nowrap;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0px;
+            .userNameCss {
+              padding: 0px;
+            }
+          }
+        }
+        &.deadlineCss {
+          padding-bottom: 0px;
+          padding-top: 10px;
+        }
+      }
+      .statusContainer {
+        .blueCss,
+        .greenCss {
+          font-size: 12px;
+          .publicCSS {
+            padding-right: 3px;
+          }
+          .private {
+            padding: 0px 3px;
+          }
+        }
+        .blueCss {
+          color: #13a7ff;
+        }
+        .greenCss {
+          color: #00d49c;
+        }
+      }
+    }
+  }
+}

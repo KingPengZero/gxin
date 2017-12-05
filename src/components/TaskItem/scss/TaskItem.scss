@@ -1,0 +1,39 @@
+@import '../../../Common/Common';
+.taskItemCss {
+  padding: 11px 13px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  .leftPortrait {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+    .userName {
+      color: #000000;
+      font-size: 13px;
+      padding-left: 10px;
+      padding-right: 10px;
+      line-height: 26px;
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
+  }
+  .rightStatus {
+    display: flex;
+    justify-content: flex-end;
+    color: #777777;
+    font-size: 13px;
+    .unTreat {
+      padding-left: 17px;
+    }
+    .private {
+      padding-left: 3px;
+    }
+  }
+}

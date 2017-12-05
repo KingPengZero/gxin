@@ -1,0 +1,111 @@
+@import "../../../Common/Common";
+$backColor: #ECEDF0;
+.searchBarCss {
+  background: $backColor;
+  position: relative;
+  width: 100%;
+  padding: 5px; // border-bottom: 1px solid #fcfcfc;
+  .searchBar {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    .icon1 {
+      // @extend .gWebkitBoxCenter;
+      // position: absolute;
+      height: 100%;
+      background: $g-content-background-color;
+      border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px; // div {
+      //   @include g-Image-Center-Url($url: '../img/icon-search@3x.png');
+      //   height: 20px;
+      //   width: 30px;
+      // }
+    }
+    .inputKey {
+      flex: 1;
+      background: #ffffff;
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+      height: 100%;
+      input {
+        width: 100%;
+        height: 100%;
+        padding: 5px; // border-radius: 5px;
+        background: $g-content-background-color; // border: 1px solid $backColor;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px; // take out default style
+        border: none;
+        outline: none;
+        -webkit-appearance: none;
+        font-size: 14px; // color: #a0a0a0;
+        background: none;
+        background-color: transparent;
+        border-color: transparent;
+        border-radius: 0;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    .iconDelete {
+      @extend .gWebkitBoxCenter;
+      background: $backColor;
+      display: flex;
+      align-items: center;
+      background: #ECEDF0;
+      border-radius: 5px;
+      color: #13a7ff;
+      // height: 30px;
+      height: 100%;
+      font-size: 14px;
+      padding-right: 10px;
+      .img {
+        padding: 5px 0;
+        border-top-right-radius: 2px;
+        background-color: #fff;
+        margin: 0 -3px;
+        height: 100%;
+      }
+      .content {
+        @extend .gWebkitBoxCenter;
+        padding: 5px 10px;
+        background: #ffffff;
+        line-height: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        height: 100%;
+      }
+    }
+  }
+  .info {
+    position: relative;
+    width: 100%;
+    margin-top: -32px;
+    .infoContent {
+      @extend .gWebkitBoxCenter;
+      padding: 6px 5px;
+      border-radius: 5px;
+      background: #ECEDF0;
+      width: 100%;
+      .iconTitle {
+        display: flex; //width: 100%;
+        position: relative;
+        .icon {
+          @extend .gWebkitBoxCenter; //flex: 1px;
+          right: 0;
+          div {
+            @include g-Image-Center-Url($url: '../img/icon-search@3x.png');
+            height: 20px;
+            width: 20px;
+          }
+        }
+        .title {
+          @extend .gWebkitBoxCenter; //flex: 1px;
+        }
+      }
+    }
+    &.select {
+      display: none;
+    }
+  }
+}

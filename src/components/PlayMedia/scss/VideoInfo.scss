@@ -1,0 +1,24 @@
+.videoInfoCss {
+  > div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #000;
+    width: 100vw;
+    height: 100vh;
+
+    .closeVideo {
+      position: absolute;
+      right: -1px;
+      top: -1px;
+      z-index: 2;
+      color: #fff;
+      font-size: 20px;
+
+      > div {
+        padding: 5px;
+        // border: 1px solid ;
+      }
+    }
+  }
+}

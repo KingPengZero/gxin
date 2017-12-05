@@ -1,0 +1,122 @@
+.datepickerCss {
+  position: relative;
+  font-size: .48rem;
+  min-width: 4rem;
+  max-width: 5.3rem;
+
+  .header {
+    display: flex;
+    text-align: center;
+
+    > div {
+      padding: 5px;
+    }
+
+    .previous {
+      margin-left: 5px;
+    }
+
+    .next {
+      margin-right: 5px;
+    }
+
+    .date {
+      flex: 1;
+    }
+  }
+
+  .body {
+    .header {
+      display: flex;
+
+      > div {
+        padding: 5px;
+        min-width: 30px;
+        text-align: center;
+        flex: 1;
+      }
+    }
+
+    .dateList {
+      min-height: 222px;
+
+      .row {
+        display: flex;
+
+        > div {
+          padding: 5px;
+          min-width: 30px;
+          text-align: center;
+          flex: 1;
+        }
+
+        .__select {
+          padding: 4px;
+          border: 1px solid #dcdcdc;
+          background: cyan;
+          color: #222;
+          border-radius: 10px;
+        }
+
+        .display {
+          &:hover {
+            @extend .__select;
+          }
+        }
+
+        .taDay {
+          @extend .__select;
+        }
+      }
+
+    }
+
+    .timeInfo {
+      margin-top: 5px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+
+      > div {
+        padding: 5px 10px;
+        display: flex;
+        white-space: nowrap;
+        align-items: center;
+
+        > input {
+          border: 1px solid #dcdcdc;
+          padding: 5px;
+          font-size: 18px;
+          width: 100%;
+        }
+      }
+    }
+
+  }
+
+  .footer {
+    display: flex;
+    align-content: center;
+    margin-top: 15px;
+
+    > div {
+      margin: 5px;
+      flex: 1;
+      text-align: center;
+
+      > span {
+        padding: 5px 15px;
+        border: 1px solid #dcdcdc;
+        background: cornsilk;
+        color: #222;
+        border-radius: 8px;
+        font-size: 16px;
+
+        &:hover {
+          background: #c3ddef;
+          color: #222;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+@import '../../../Common/Common';
+.relationItemCss {
+  padding: 0px 15px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  .content {
+    padding: 5px 0px;
+    color: #222222;
+    font-size: 16px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+  .bottomContainer {
+    display: flex;
+    align-items: center;
+    .resiverContainer {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      color: #656565;
+      font-size: 12px;
+      padding-top: 4px;
+      padding-bottom: 6px;
+      padding-right: 5px;
+      &.hidePadding {
+        padding-bottom: 0px;
+        padding-top: 0px;
+      }
+      .resiverIcon {
+        padding: 0px;
+        padding: 0px;
+        display: flex;
+        align-items: center;
+        .span {
+          padding: 0 4px;
+        }
+      }
+      .resiver {
+        flex: 1;
+        padding: 0px 4px;
+        // white-space: nowrap;
+        overflow: hidden;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        .userContainer {
+          white-space: nowrap;
+          -webkit-line-clamp: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 0px;
+          .userNameCss {
+            padding: 0px; // width: 100%;
+          }
+        }
+      }
+      &.deadlineCss {
+        padding-bottom: 0px;
+        padding-top: 10px;
+      }
+    }
+    .relationBtn {
+      display: flex;
+      padding: 0px 20px;
+      border: 1px solid #e6e6e6;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      height: 27px;
+      white-space: nowrap;
+      .relationCss {
+        color: #13a7ff;
+        font-size: 12px;
+        &.cancelCss {
+          color: #222222;
+        }
+      }
+    }
+  }
+}

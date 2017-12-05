@@ -1,0 +1,121 @@
+group 'gocom_apps'
+version '2.0.0'
+
+buildscript {
+  repositories {
+    mavenCentral()
+    maven {
+      url "http://172.20.96.206:8081/nexus/content/repositories/central/"
+    }
+    maven {
+      url "http://172.20.96.206:8081/nexus/content/repositories/gradle-plugins/"
+    }
+  }
+  ext{
+    rpmPluginVersion = "2.2.6"
+    sshPluginVersion = "1.5.0"
+  }
+  dependencies {
+    classpath(
+      "com.netflix.nebula:gradle-ospackage-plugin:$rpmPluginVersion",
+      "org.hidetake:gradle-ssh-plugin:$sshPluginVersion"
+    )
+  }
+}
+
+apply plugin: 'nebula.rpm'
+apply plugin: "org.hidetake.ssh"
+
+task fooRpm(dependsOn : 'clean', type: Rpm) {
+
+  def buildDir = 'deploy'
+  def rpmJarDir = '/root/apps/lighttask'
+
+  packageName 'lighttask_mobile'
+  version project.version
+  arch X86_64
+  os LINUX
+
+  from("$buildDir"){
+    into("$rpmJarDir")
+  }
+}
+
+def targetUploadDir = '/usr/share/nginx/html/workplace'
+def mobileDir = '/usr/share/nginx/html'
+remotes {
+//	def deployProperties = new Properties()
+//	deployProperties.load(new FileInputStream(rootProject.projectDir.absolutePath + '/config/deploy.properties'))
+//	gocomwpServer {
+//		host = deployProperties['host']
+//		user = deployProperties['user']
+//		password = deployProperties['password']
+//		knownHosts = allowAnyHosts
+//	}
+//	def uploadProperties = new Properties()
+//	uploadProperties.load(new FileInputStream(rootProject.projectDir.absolutePath + '/config/upload.properties'))
+//	targetUploadDir = uploadProperties['dir']
+//	uploadServer {
+//		host = uploadProperties['host']
+//		user = uploadProperties['user']
+//		password = uploadProperties['password']
+//		knownHosts = allowAnyHosts
+//	}
+  gocomwpServer {
+    host = '172.20.95.36'
+    user = 'root'
+    password = 'smartdot'
+    knownHosts = allowAnyHosts
+  }
+  testServer {
+    host = '172.20.95.41'
+    user = 'root'
+    password = 'smartdot'
+    knownHosts = allowAnyHosts
+  }
+  uploadServer {
+    host = '172.20.96.204'
+    user = 'gocom'
+    password = 'gocom123'
+    knownHosts = allowAnyHosts
+  }
+}
+
+task deploy << {
+  ssh.run {
+    session(remotes.gocomwpServer) {
+      execute "rm -rf /root/lighttask_mobile*.rpm"
+      put from : "$project.buildDir/distributions/lighttask_mobile-${project.version}.x86_64.rpm" ,into : '/root'
+      execute "rpm -e lighttask_mobile", ignoreError: true
+      execute "rm -Rf $mobileDir/apps/lighttask", ignoreError: true
+      execute "rpm -i ~/lighttask_mobile-${project.version}.x86_64.rpm"
+      execute "mkdir -p $mobileDir/apps"
+      execute "cp -r /root/apps/lighttask $mobileDir/apps"
+    }
+  }
+}
+
+task deployTest << {
+  ssh.run {
+    session(remotes.testServer) {
+      execute "rm -rf /root/lighttask_mobile*.rpm"
+      put from : "$project.buildDir/distributions/lighttask_mobile-${project.version}.x86_64.rpm" ,into : '/root'
+      execute "rpm -e lighttask_mobile", ignoreError: true
+      execute "rm -Rf $mobileDir/apps/lighttask", ignoreError: true
+      execute "rpm -i ~/lighttask_mobile-${project.version}.x86_64.rpm"
+      execute "mkdir -p $mobileDir/apps"
+      execute "cp -r /root/apps/lighttask $mobileDir/apps"
+    }
+  }
+}
+
+task upload << {
+  def today = new Date().format('yyyy-MM-dd')
+  ssh.run {
+    session(remotes.uploadServer)     {
+      //create the new daily dir
+      execute "mkdir -p $targetUploadDir/$today/apps/lighttask" ,ignoreError : true
+      put from : "$project.buildDir/distributions/lightTask_mobile-${project.version}.x86_64.rpm" ,into : "$targetUploadDir/$today/apps/lighttask"
+    }
+  }
+}
